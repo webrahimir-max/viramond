@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>VIRAMOND | دنیای کیفای خوشگل و خاص</title>
+    <meta name="description" content="ویرا موند؛ دنیای کیفای خوشگل و خاص. از ایلام، ارسال به سراسر ایران." />
+    <meta name="theme-color" content="#121212" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" />
+    <style>
+      :root {
+        --bg: #121212;
+        --bg-2: #1a1918;
+        --card: #1e1c1a;
+        --ivory: #f3ebdd;
+        --muted: #bdb3a3;
+        --gold: #c9a45c;
+        --gold-2: #e2c27e;
+        --red: #8e1b1b;
+        --red-2: #a52424;
+        --line: rgba(201, 164, 92, 0.28);
+        --line-2: rgba(201, 164, 92, 0.14);
+        --r: 16px;
+        --max: 1200px;
+        --pad: 16px;
+        --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+        --font: Vazirmatn, "Vazirmatn", Tahoma, system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0; background: var(--bg); color: var(--ivory); font-family: var(--font);
+        font-size: 15px; line-height: 1.8; overflow-x: clip;
+        padding-bottom: calc(68px + env(safe-area-inset-bottom));
+      }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+      :focus-visible { outline: 2px solid var(--gold-2); outline-offset: 3px; border-radius: 8px; }
+      .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+      .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+      .ltr { direction: ltr; unicode-bidi: isolate; }
+      [hidden] { display: none !important; }
+      svg.i { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+      /* announcement */
+      .ann { background: var(--red); color: #fff7ea; text-align: center; font-size: 13px; font-weight: 500; min-height: 38px; display: grid; place-items: center; padding: 6px var(--pad); border-bottom: 1px solid rgba(201, 164, 92, 0.35); }
+      .ann p { margin: 0; transition: opacity 0.4s, transform 0.4s var(--ease); }
+      .ann p.out { opacity: 0; transform: translateY(-6px); }
+
+      /* header */
+      .hdr { position: sticky; top: 0; z-index: 40; background: rgba(18, 18, 18, 0.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line-2); }
+      .hdr .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 8px; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
+      .mono { width: 38px; height: 38px; flex: none; filter: drop-shadow(0 0 10px rgba(201, 164, 92, 0.25)); }
+      .word { font-weight: 600; letter-spacing: 0.26em; font-size: 15px; color: var(--ivory); direction: ltr; }
+      .word b { color: var(--gold); font-weight: 600; }
+      .tools { display: flex; align-items: center; gap: 2px; }
+      .ib { position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; transition: background 0.2s, color 0.2s; }
+      .ib:hover { background: rgba(201, 164, 92, 0.1); color: var(--gold-2); }
+      .badge { position: absolute; top: 4px; left: 3px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--gold); color: #121212; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center; transition: transform 0.3s var(--ease); }
+      .badge.pop { transform: scale(1.35); }
+      .search { border-top: 1px solid var(--line-2); padding: 10px 0 12px; }
+      .search input { width: 100%; min-height: 46px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-2); color: var(--ivory); font: inherit; padding: 0 18px; }
+      .search input::placeholder { color: var(--muted); }
+      .nav-d { display: none; gap: 4px; }
+      .nav-d a { padding: 10px 12px; font-size: 14px; color: var(--muted); border-radius: 999px; }
+      .nav-d a:hover { color: var(--gold-2); }
+
+      /* drawer */
+      .scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 60; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+      .drawer { position: fixed; top: 0; bottom: 0; right: 0; width: min(86vw, 340px); background: var(--bg-2); border-left: 1px solid var(--line); z-index: 61; transform: translateX(100%); transition: transform 0.35s var(--ease); padding: 16px 20px 32px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; }
+      .open .scrim { opacity: 1; pointer-events: auto; }
+      .open .drawer { transform: none; }
+      .drawer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+      .drawer h2 { font-size: 13px; color: var(--gold); font-weight: 500; margin: 12px 0 4px; letter-spacing: 0.02em; }
+      .drawer a, .drawer button.dl { display: flex; align-items: center; justify-content: space-between; min-height: 50px; border-bottom: 1px solid var(--line-2); font-size: 16px; width: 100%; text-align: right; }
+      .drawer a:hover, .drawer button.dl:hover { color: var(--gold-2); }
+
+      /* hero */
+      .hero { position: relative; min-height: min(88svh, 780px); display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; }
+      .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; z-index: -2; transform: scale(1.04); animation: zoom 9s var(--ease) forwards; }
+      @keyframes zoom { to { transform: scale(1); } }
+      .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, #121212 4%, rgba(18, 18, 18, 0.82) 32%, rgba(18, 18, 18, 0.2) 62%, rgba(18, 18, 18, 0.35) 100%); }
+      .hero .wrap { padding-top: 120px; padding-bottom: 40px; }
+      .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); font-size: 13px; font-weight: 500; margin: 0 0 10px; }
+      .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
+      .hero h1 { font-size: clamp(38px, 11vw, 76px); line-height: 1.2; margin: 0 0 12px; font-weight: 800; letter-spacing: -0.01em; }
+      .hero h1 span { color: var(--gold); }
+      .hero p.sub { font-size: 16px; color: #e6dccb; max-width: 30em; margin: 0 0 24px; }
+      .ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 24px; border-radius: 999px; font-weight: 600; font-size: 15px; border: 1px solid var(--gold); transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s; }
+      .btn:active { transform: scale(0.98); }
+      .btn-gold { background: var(--gold); color: #121212; }
+      .btn-gold:hover { background: var(--gold-2); box-shadow: 0 0 28px rgba(201, 164, 92, 0.45); }
+      .btn-line { color: var(--ivory); background: rgba(18, 18, 18, 0.35); }
+      .btn-line:hover { color: var(--gold-2); box-shadow: 0 0 22px rgba(201, 164, 92, 0.25); }
+      .float-chip { position: absolute; top: 22px; left: var(--pad); display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(18, 18, 18, 0.62); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); font-size: 13px; font-weight: 500; animation: bob 4s ease-in-out infinite; }
+      .float-chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+      @keyframes bob { 50% { transform: translateY(-5px); } }
+
+      /* trust */
+      .trust { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-block: 20px 8px; }
+      .t { display: flex; align-items: center; gap: 10px; padding: 14px 12px; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--bg-2); font-size: 13px; line-height: 1.6; font-weight: 500; }
+      .t span.ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex: none; color: var(--gold); border: 1px solid var(--line); }
+
+      /* sections */
+      .sec { padding-block: 56px 8px; }
+      .sec-h { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+      .sec-h h2 { font-size: clamp(24px, 6.4vw, 34px); line-height: 1.35; margin: 0; font-weight: 700; }
+      .sec-h p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+      .kicker { color: var(--gold); font-size: 13px; font-weight: 500; margin: 0 0 4px; }
+      .hair { height: 1px; background: linear-gradient(to left, transparent, var(--line), transparent); border: 0; margin: 0; }
+
+      /* collections */
+      .scroller { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px var(--pad) 14px; margin-inline: calc(var(--pad) * -1); scrollbar-width: none; overscroll-behavior-x: contain; }
+      .scroller::-webkit-scrollbar { display: none; }
+      .coll { flex: 0 0 62%; max-width: 260px; scroll-snap-align: start; text-align: right; border-radius: var(--r); background: var(--card); border: 1px solid var(--line-2); overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s var(--ease); }
+      .coll:hover { border-color: var(--gold); box-shadow: 0 0 30px rgba(201, 164, 92, 0.18); transform: translateY(-3px); }
+      .coll img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; }
+      .coll .cap { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 14px; font-weight: 600; font-size: 15px; min-height: 52px; }
+      .coll .cap svg { color: var(--gold); }
+
+      /* products */
+      .chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px var(--pad) 6px; margin: 0 calc(var(--pad) * -1) 14px; }
+      .chips::-webkit-scrollbar { display: none; }
+      .chip { flex: none; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); font-size: 14px; color: var(--muted); transition: all 0.25s; white-space: nowrap; }
+      .chip:hover { color: var(--ivory); border-color: var(--gold); }
+      .chip[aria-pressed="true"] { background: var(--gold); color: #121212; border-color: var(--gold); font-weight: 600; }
+      .demo-note { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.75; color: #e6dccb; background: rgba(142, 27, 27, 0.22); border: 1px dashed rgba(201, 164, 92, 0.5); border-radius: 12px; padding: 10px 12px; margin: 0 0 18px; }
+      .demo-note b { color: #fff7ea; flex: none; font-weight: 700; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .card { position: relative; display: flex; flex-direction: column; border-radius: var(--r); background: var(--card); border: 1px solid var(--line-2); overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s var(--ease); }
+      .card:hover { border-color: rgba(201, 164, 92, 0.6); box-shadow: 0 0 34px rgba(201, 164, 92, 0.16); transform: translateY(-3px); }
+      .card .ph { position: relative; overflow: hidden; }
+      .card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 0.6s var(--ease); }
+      .card:hover img { transform: scale(1.04); }
+      .card img.up { object-position: center 40%; }
+      .tag { position: absolute; top: 10px; right: 10px; background: var(--red); color: #fff7ea; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(201, 164, 92, 0.6); }
+      .heart { position: absolute; top: 6px; left: 6px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--ivory); }
+      .heart span { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: transform 0.25s var(--ease); }
+      .heart svg { width: 18px; height: 18px; }
+      .heart[aria-pressed="true"] { color: var(--gold); }
+      .heart[aria-pressed="true"] svg { fill: var(--gold); }
+      .heart:active span { transform: scale(0.85); }
+      .card .bd { display: flex; flex-direction: column; gap: 8px; padding: 12px; flex: 1; }
+      .card h3 { font-size: 14px; line-height: 1.6; font-weight: 600; margin: 0; }
+      .cat { font-size: 12px; color: var(--muted); margin: -6px 0 0; }
+      .price { margin-top: auto; border: 1px solid var(--gold); color: var(--gold-2); border-radius: 10px; padding: 5px 10px; font-size: 13px; font-weight: 600; text-align: center; line-height: 1.6; }
+      .price.known { background: #2a2419; }
+      .tel-in { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding-inline: 4px; color: var(--gold-2); }
+      .price small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
+      .ask { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; border-radius: 12px; background: var(--ivory); color: #121212; font-size: 13px; font-weight: 600; text-align: center; line-height: 1.4; padding: 6px 8px; transition: background 0.25s, box-shadow 0.25s; }
+      .ask:hover { background: var(--gold); box-shadow: 0 0 22px rgba(201, 164, 92, 0.4); }
+      .empty { text-align: center; color: var(--muted); padding: 28px 12px; border: 1px dashed var(--line); border-radius: var(--r); grid-column: 1 / -1; font-size: 14px; }
+
+      /* story */
+      .story { display: grid; gap: 22px; align-items: center; }
+      .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .duo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r); border: 1px solid var(--line); }
+      .duo img:last-child { object-position: center top; margin-top: 28px; }
+      .story-t p { margin: 0 0 12px; color: #e6dccb; }
+      .story-t .quote { font-size: 22px; font-weight: 700; color: var(--gold); margin: 18px 0 20px; padding-right: 14px; border-right: 2px solid var(--red-2); line-height: 1.6; }
+
+      /* steps */
+      .steps { display: grid; gap: 12px; list-style: none; margin: 0; padding: 0; counter-reset: s; }
+      .steps li { position: relative; display: flex; gap: 14px; align-items: flex-start; padding: 18px 16px; border-radius: var(--r); background: var(--card); border: 1px solid var(--line-2); }
+      .steps .n { width: 46px; height: 46px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 20px; font-weight: 800; color: #121212; background: var(--gold); box-shadow: 0 0 20px rgba(201, 164, 92, 0.35); }
+      .steps h3 { margin: 2px 0 2px; font-size: 16px; font-weight: 700; }
+      .steps p { margin: 0; font-size: 14px; color: var(--muted); }
+
+      /* faq */
+      .faq { border-top: 1px solid var(--line); }
+      .faq h3 { margin: 0; }
+      .q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 60px; padding: 12px 0; text-align: right; font-size: 16px; font-weight: 600; border-bottom: 1px solid var(--line-2); }
+      .q:hover { color: var(--gold-2); }
+      .q .pm { position: relative; width: 28px; height: 28px; flex: none; border-radius: 50%; border: 1px solid var(--line); }
+      .q .pm::before, .q .pm::after { content: ""; position: absolute; top: 50%; left: 50%; width: 11px; height: 1.5px; background: var(--gold); transform: translate(-50%, -50%); transition: transform 0.3s var(--ease); }
+      .q .pm::after { transform: translate(-50%, -50%) rotate(90deg); }
+      .q[aria-expanded="true"] .pm::after { transform: translate(-50%, -50%) rotate(0); }
+      .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s var(--ease); }
+      .a > div { overflow: hidden; }
+      .a p { margin: 0; padding: 12px 0 16px; color: #e6dccb; font-size: 15px; }
+      .a.open { grid-template-rows: 1fr; }
+      .a:not(.open) > div { visibility: hidden; transition: visibility 0s 0.35s; }
+      .drawer { visibility: hidden; transition: transform 0.35s var(--ease), visibility 0s 0.35s; }
+      .open .drawer { visibility: visible; transition: transform 0.35s var(--ease); }
+
+      /* footer */
+      .foot { margin-top: 64px; border-top: 1px solid var(--line); background: linear-gradient(to bottom, #161514, #0e0e0e); padding: 36px 0 28px; }
+      .foot .brand { margin-bottom: 6px; }
+      .foot .tl { color: var(--muted); margin: 0 0 18px; }
+      .fl { display: grid; gap: 4px; margin-bottom: 18px; }
+      .fl a { display: flex; align-items: center; gap: 10px; min-height: 44px; color: var(--ivory); }
+      .fl a:hover { color: var(--gold-2); }
+      .fl svg { color: var(--gold); }
+      .loc { margin: 0 0 18px; color: #e6dccb; font-size: 14px; }
+      .credit { margin: 0; padding-top: 16px; border-top: 1px solid var(--line-2); font-size: 12px; color: var(--muted); }
+      .credit a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding-inline: 4px; text-decoration: underline; text-underline-offset: 3px; }
+
+      /* floating DM + bottom nav */
+      .fab { position: fixed; left: 16px; bottom: calc(80px + env(safe-area-inset-bottom)); z-index: 45; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #121212; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(201, 164, 92, 0.18); transition: transform 0.25s var(--ease), box-shadow 0.25s; }
+      .fab:hover { transform: scale(1.06); box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 30px rgba(201, 164, 92, 0.5); }
+      .fab svg { width: 26px; height: 26px; }
+      .bnav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 44; display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(18, 18, 18, 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+      .bnav a, .bnav button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 60px; font-size: 12px; color: var(--muted); }
+      .bnav a:hover, .bnav button:hover, .bnav .on { color: var(--gold); }
+      .bnav svg { width: 22px; height: 22px; }
+
+      /* reveal */
+      .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+      .js .reveal.in { opacity: 1; transform: none; }
+
+      @media (min-width: 640px) {
+        .trust { grid-template-columns: repeat(4, 1fr); }
+        .coll { flex-basis: 38%; }
+        .steps { grid-template-columns: repeat(3, 1fr); }
+        .steps li { flex-direction: column; }
+      }
+      @media (min-width: 900px) {
+        :root { --pad: 24px; }
+        body { padding-bottom: 0; font-size: 16px; }
+        .bnav { display: none; }
+        .fab { bottom: 24px; left: 24px; }
+        .nav-d { display: flex; }
+        #menuBtn { display: none; }
+        .hero .wrap { padding-bottom: 72px; }
+        .float-chip { top: auto; bottom: 80px; left: var(--pad); }
+        .scroller { margin-inline: 0; padding-inline: 0; overflow: visible; }
+        .coll { flex: 1 1 0; max-width: none; }
+        .chips { margin-inline: 0; padding-inline: 0; }
+        .grid { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+        .card h3 { font-size: 15px; }
+        .story { grid-template-columns: 1.05fr 1fr; gap: 48px; }
+        .faq-wrap { max-width: 780px; }
+        .foot .wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; }
+        .credit { grid-column: 1 / -1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        html { scroll-behavior: auto; }
+        .js .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ann" role="region" aria-label="اطلاعیه"><p id="annText" aria-live="polite">ارسال به سراسر ایران از ایلام 📦</p></div>
+
+    <header class="hdr" id="hdr">
+      <div class="wrap">
+        <a class="brand" href="#top" aria-label="ویرا موند، صفحه اصلی">
+          <svg class="mono" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.6" fill="none" stroke="#C9A45C" stroke-width="1.2"/><circle cx="20" cy="20" r="15.6" fill="none" stroke="#C9A45C" stroke-width=".5" opacity=".55"/><path d="M12.5 12.5 20 28.5l7.5-16" fill="none" stroke="#C9A45C" stroke-width="2.3" stroke-linejoin="miter"/><path d="M10.5 12.5h5M24.5 12.5h5" stroke="#C9A45C" stroke-width="1.2"/><circle cx="20" cy="7.2" r="1" fill="#C9A45C"/></svg>
+          <span class="word">VIRA<b>MOND</b></span>
+        </a>
+        <nav class="nav-d" aria-label="منوی اصلی">
+          <a href="#collections">کالکشن‌ها</a><a href="#products">انتخاب‌های هفته</a><a href="#story">داستان ما</a><a href="#faq">سوالات</a>
+        </nav>
+        <div class="tools">
+          <button class="ib" id="searchBtn" aria-label="جستجو" aria-expanded="false" aria-controls="searchBar"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+          <button class="ib" id="favBtn" aria-label="علاقه‌مندی‌ها"><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg><span class="badge" id="favCount" hidden>۰</span></button>
+          <a class="ib" id="bagBtn" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener" aria-label="سبد استعلام‌ها، پیام در دایرکت"><svg class="i" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="badge" id="bagCount">۰</span></a>
+          <button class="ib" id="menuBtn" aria-label="باز کردن منو" aria-expanded="false" aria-controls="drawer"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M10 17h10"/></svg></button>
+        </div>
+      </div>
+      <div class="search" id="searchBar" hidden>
+        <div class="wrap"><input id="q" type="search" aria-label="جستجوی کیف" placeholder="دنبال چه کیفی هستی؟ مثلاً ساک" autocomplete="off" /></div>
+      </div>
+    </header>
+
+    <div class="scrim" id="scrim"></div>
+    <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="منو" aria-hidden="true">
+      <div class="drawer-top">
+        <span class="word">VIRA<b>MOND</b></span>
+        <button class="ib" id="closeBtn" aria-label="بستن منو"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <h2>کالکشن‌ها</h2>
+      <button class="dl" data-filter="کیف پول">کیف پول فانتزی <span aria-hidden="true">‹</span></button>
+      <button class="dl" data-filter="کیف پول">جاکارتی طرح‌دار <span aria-hidden="true">‹</span></button>
+      <button class="dl" data-filter="کیف پول">کیف پول مخملی <span aria-hidden="true">‹</span></button>
+      <button class="dl" data-filter="کیف زنانه">کیف زنانه <span aria-hidden="true">‹</span></button>
+      <button class="dl" data-filter="ساک و بادی‌بگ">کیف دوشی و بادی‌بگ <span aria-hidden="true">‹</span></button>
+      <h2>ویرا موند</h2>
+      <a href="#story" data-close>داستان ما <span aria-hidden="true">‹</span></a>
+      <a href="#steps" data-close>سفارش در ۳ قدم <span aria-hidden="true">‹</span></a>
+      <a href="#faq" data-close>سوالات پرتکرار <span aria-hidden="true">‹</span></a>
+      <a href="https://www.instagram.com/viramond.ir/" target="_blank" rel="noopener">اینستاگرام <span class="ltr">@viramond.ir</span></a>
+      <a href="tel:09918032131">پشتیبانی <span>۰۹۹۱۸۰۳۲۱۳۱</span></a>
+    </aside>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="heroTitle">
+        <img src="p9b_sak-bashgahi-frame.jpg" alt="زنی با ساک باشگاهی قهوه‌ای و مشکی در فضای تاریک باشگاه" fetchpriority="high" />
+        <span class="float-chip"><i aria-hidden="true"></i>ارسال به سراسر ایران</span>
+        <div class="wrap">
+          <p class="eyebrow">دنیای کیفای خوشگل و خاص 👜</p>
+          <h1 id="heroTitle">کیفی که <span>دیده می‌شه</span></h1>
+          <p class="sub">دنیای کیفای خوشگل و خاص؛ از ایلام تا دم در خونه‌ت</p>
+          <div class="ctas">
+            <a class="btn btn-gold" href="#products">دیدن کیف‌ها</a>
+            <a class="btn btn-line" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">پیام در دایرکت</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap">
+        <ul class="trust reveal" role="list" style="list-style:none;margin:0">
+          <li class="t"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>ارسال به سراسر ایران</li>
+          <li class="t"><span class="ic"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span>عکس و ویدیوی واقعی هر مدل</li>
+          <li class="t"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M4 18.5V6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H8l-4 2.5Z"/><path d="M8.5 9.5h7M8.5 12.5h4"/></svg></span>پاسخ سریع در دایرکت</li>
+          <li class="t"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span>پشتیبانی تلفنی</li>
+        </ul>
+      </div>
+
+      <section class="sec" id="collections" aria-labelledby="collTitle">
+        <div class="wrap">
+          <div class="sec-h reveal">
+            <div><p class="kicker">کالکشن‌ها</p><h2 id="collTitle">کالکشن‌ها</h2><p>یکی رو انتخاب کن تا مدل‌هاش رو ببینی.</p></div>
+          </div>
+          <div class="scroller reveal" role="list">
+            <button class="coll" role="listitem" data-filter="کیف پول"><img src="p1_kifpool-fantezi.jpg" alt="پوستر کالکشن کیف پول فانتزی" /><span class="cap">کیف پول فانتزی <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg></span></button>
+            <button class="coll" role="listitem" data-filter="کیف پول"><img src="p4_jakarti-tarhdar.jpg" alt="پوستر کالکشن جاکارتی طرح‌دار" loading="lazy" /><span class="cap">جاکارتی طرح‌دار <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg></span></button>
+            <button class="coll" role="listitem" data-filter="کیف پول"><img src="p5_kifpool-makhmali.jpg" alt="پوستر کالکشن کیف پول مخملی" loading="lazy" /><span class="cap">کیف پول مخملی <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg></span></button>
+            <button class="coll" role="listitem" data-filter="ساک و بادی‌بگ"><img src="p6_basat-hemayat.jpg" alt="پوستر پنج کیف کراس‌بادی ویرا" loading="lazy" /><span class="cap">کیف دوشی و بادی‌بگ <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg></span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="products" aria-labelledby="prodTitle">
+        <div class="wrap">
+          <div class="sec-h reveal">
+            <div><p class="kicker">هر مدل، محدود و خاص</p><h2 id="prodTitle">انتخاب‌های این هفته</h2></div>
+          </div>
+          <div class="chips" role="group" aria-label="فیلتر محصولات">
+            <button class="chip" data-chip="all" aria-pressed="true">همه</button>
+            <button class="chip" data-chip="کیف زنانه" aria-pressed="false">کیف زنانه</button>
+            <button class="chip" data-chip="کیف پول" aria-pressed="false">کیف پول</button>
+            <button class="chip" data-chip="ساک و بادی‌بگ" aria-pressed="false">ساک و بادی‌بگ</button>
+            <button class="chip" data-chip="fav" aria-pressed="false">♡ علاقه‌مندی‌ها</button>
+          </div>
+          <p class="demo-note"><b>نکته</b><span>این نمونه است؛ قیمت‌ها بعد از هماهنگی با شما وارد می‌شن تا مشتری بدون پیام دادن، قیمت رو ببینه.</span></p>
+          <div class="grid" id="grid" aria-live="polite">
+            <article class="card reveal" data-cat="کیف زنانه">
+              <div class="ph"><img class="up" src="p10_kif-zanjiri.jpg" alt="کیف زنانه مشکی زنجیری با طرح چرم کروکودیل روی فرش قرمز" loading="lazy" /><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>کیف زنانه زنجیری، طرح چرم کروکودیل</h3><p class="cat">کیف زنانه</p><p class="price">قیمت: به‌زودی</p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">استعلام قیمت در دایرکت</a></div>
+            </article>
+            <article class="card reveal" data-cat="کیف زنانه">
+              <div class="ph"><img class="up" src="p12_kif-zanane-meshki.jpg" alt="کیف دوشی زنانه مشکی روی فرش قرمز" loading="lazy" /><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>کیف دوشی زنانه مشکی</h3><p class="cat">کیف زنانه</p><p class="price">قیمت: به‌زودی</p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">استعلام قیمت در دایرکت</a></div>
+            </article>
+            <article class="card reveal" data-cat="ساک و بادی‌بگ">
+              <div class="ph"><img src="p9c_sak-bashgahi-mard-frame.jpg" alt="مردی با ساک باشگاهی قهوه‌ای و مشکی" loading="lazy" /><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>ساک باشگاهی قهوه‌ای-مشکی</h3><p class="cat">ساک و بادی‌بگ</p><p class="price">قیمت: به‌زودی</p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">استعلام قیمت در دایرکت</a></div>
+            </article>
+            <article class="card reveal" data-cat="ساک و بادی‌بگ">
+              <div class="ph"><img src="p11_sak-bashgahi2.jpg" alt="زنی با ساک باشگاهی در رختکن" loading="lazy" /><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>ساک باشگاهی اقتصادی</h3><p class="cat">ساک و بادی‌بگ</p><p class="price">قیمت: به‌زودی</p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">استعلام قیمت در دایرکت</a></div>
+            </article>
+            <article class="card reveal" data-cat="ساک و بادی‌بگ">
+              <div class="ph"><img class="up" src="p8b_bodybag-frame.jpg" alt="بادی‌بگ جین آبی روشن در دست" loading="lazy" /><span class="tag">خوش‌قیمت</span><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>بادی‌بگ جین</h3><p class="cat">ساک و بادی‌بگ</p><p class="price known">کمتر از ۱ میلیون تومان<small>مدل مشابهش ۲ میلیونه</small></p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">سفارش در دایرکت</a></div>
+            </article>
+            <article class="card reveal" data-cat="کیف پول">
+              <div class="ph"><img src="p7b_kifpool-spiderman-frame.jpg" alt="کیف پول طرح اسپایدرمن در دست" loading="lazy" /><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>کیف پول اسپایدرمن</h3><p class="cat">کیف پول</p><p class="price">قیمت: به‌زودی</p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">استعلام قیمت در دایرکت</a></div>
+            </article>
+            <article class="card reveal" data-cat="کیف پول">
+              <div class="ph"><img src="p3_kifpool-dariush.jpg" alt="کیف پول با چاپ تصویر داریوش خواننده" loading="lazy" /><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>کیف پول طرح داریوش</h3><p class="cat">کیف پول</p><p class="price">قیمت: به‌زودی</p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">استعلام قیمت در دایرکت</a></div>
+            </article>
+            <article class="card reveal" data-cat="کیف پول">
+              <div class="ph"><img src="p2_kifpool-bazar.jpg" alt="انبوهی از کیف پول‌های فانتزی با طرح‌های مختلف روی بساط" loading="lazy" /><button class="heart" aria-pressed="false" aria-label="افزودن به علاقه‌مندی‌ها"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg></span></button></div>
+              <div class="bd"><h3>کیف پول‌های فانتزی، طرح‌های متنوع</h3><p class="cat">کیف پول</p><p class="price">قیمت: به‌زودی</p><a class="ask" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener">استعلام قیمت در دایرکت</a></div>
+            </article>
+            <p class="empty" id="empty" hidden>هنوز چیزی اینجا نیست. روی ♡ کیف‌های مورد علاقه‌ت بزن.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="story" aria-labelledby="storyTitle">
+        <div class="wrap story">
+          <div class="duo reveal">
+            <img src="p2_kifpool-bazar.jpg" alt="کیف پول‌های رنگارنگ روی بساط ویرا موند" loading="lazy" />
+            <img src="p6_basat-hemayat.jpg" alt="پوستر کیف‌های کراس‌بادی ویرا" loading="lazy" />
+          </div>
+          <div class="story-t reveal">
+            <p class="kicker">داستان ما</p>
+            <div class="sec-h" style="margin-bottom:14px"><h2 id="storyTitle">از بساط طالقانی تا سراسر ایران</h2></div>
+            <p>ویرا موند از یه بساط ساده روی سنگ‌فرش طالقانی ایلام شروع شد؛ با چند تا کیف خوشگل و کلی عشق.</p>
+            <p>وقتی شهر اجازه نداد بساط رو پهن کنیم، کنار نکشیدیم. مغازه رو بردیم تو اینستاگرام و حالا کیف‌هامون به سراسر ایران می‌رسه.</p>
+            <p class="quote">«پشت من خدا بوده همیشه»</p>
+            <a class="btn btn-gold" href="#products">حمایت با یه خرید</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="steps" aria-labelledby="stepsTitle">
+        <div class="wrap">
+          <div class="sec-h reveal"><div><p class="kicker">ساده و سریع</p><h2 id="stepsTitle">سفارش در ۳ قدم</h2></div></div>
+          <ol class="steps reveal">
+            <li><span class="n" aria-hidden="true">۱</span><div><h3>انتخاب مدل</h3><p>مدل رو انتخاب کن و «استعلام قیمت» رو بزن.</p></div></li>
+            <li><span class="n" aria-hidden="true">۲</span><div><h3>قیمت و پرداخت</h3><p>قیمت و رنگ رو تو دایرکت بگیر و پرداخت کن.</p></div></li>
+            <li><span class="n" aria-hidden="true">۳</span><div><h3>ارسال</h3><p>ارسال به هر جای ایران.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="sec" id="faq" aria-labelledby="faqTitle">
+        <div class="wrap faq-wrap">
+          <div class="sec-h reveal"><div><p class="kicker">سوالات پرتکرار</p><h2 id="faqTitle">جواب سوالاتت اینجاست</h2></div></div>
+          <div class="faq reveal">
+            <h3><button class="q" aria-expanded="false" aria-controls="a1" id="q1">به شهر من هم ارسال دارید؟<span class="pm" aria-hidden="true"></span></button></h3>
+            <div class="a" id="a1" role="region" aria-labelledby="q1"><div><p>بله، به سراسر ایران ارسال می‌شه.</p></div></div>
+            <h3><button class="q" aria-expanded="false" aria-controls="a2" id="q2">عکس واقعی کیف رو می‌بینم؟<span class="pm" aria-hidden="true"></span></button></h3>
+            <div class="a" id="a2" role="region" aria-labelledby="q2"><div><p>بله، از هر مدل عکس و ویدیوی واقعی تو پیج هست.</p></div></div>
+            <h3><button class="q" aria-expanded="false" aria-controls="a3" id="q3">چطور قیمت رو بپرسم؟<span class="pm" aria-hidden="true"></span></button></h3>
+            <div class="a" id="a3" role="region" aria-labelledby="q3"><div><p>روی استعلام قیمت بزنید یا کلمه «کیف» رو زیر پست کامنت کنید.</p></div></div>
+            <h3><button class="q" aria-expanded="false" aria-controls="a4" id="q4">پشتیبانی دارید؟<span class="pm" aria-hidden="true"></span></button></h3>
+            <div class="a" id="a4" role="region" aria-labelledby="q4"><div><p>بله، با شماره <a class="tel-in" href="tel:09918032131">۰۹۹۱۸۰۳۲۱۳۱</a>.</p></div></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot" id="contact">
+      <div class="wrap">
+        <div>
+          <a class="brand" href="#top" aria-label="ویرا موند، بازگشت به بالا">
+            <svg class="mono" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.6" fill="none" stroke="#C9A45C" stroke-width="1.2"/><circle cx="20" cy="20" r="15.6" fill="none" stroke="#C9A45C" stroke-width=".5" opacity=".55"/><path d="M12.5 12.5 20 28.5l7.5-16" fill="none" stroke="#C9A45C" stroke-width="2.3"/><path d="M10.5 12.5h5M24.5 12.5h5" stroke="#C9A45C" stroke-width="1.2"/><circle cx="20" cy="7.2" r="1" fill="#C9A45C"/></svg>
+            <span class="word">VIRA<b>MOND</b></span>
+          </a>
+          <p class="tl">دنیای کیفای خوشگل و خاص 👜</p>
+          <p class="loc">ایلام، ارسال به سراسر ایران</p>
+        </div>
+        <div class="fl">
+          <a href="https://www.instagram.com/viramond.ir/" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg><span class="ltr">@viramond.ir</span></a>
+          <a href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24"><path d="M4 18.5V6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H8l-4 2.5Z"/></svg>پیام در دایرکت</a>
+          <a href="tel:09918032131"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>۰۹۹۱۸۰۳۲۱۳۱</a>
+        </div>
+        <p class="credit">نمونه طراحی صفحه اصلی؛ طراحی: <a href="https://webrahim.ir" target="_blank" rel="noopener">webrahim.ir</a></p>
+      </div>
+    </footer>
+
+    <a class="fab" href="https://ig.me/m/viramond.ir" target="_blank" rel="noopener" aria-label="پیام در دایرکت اینستاگرام"><svg class="i" viewBox="0 0 24 24"><path d="M12 3.5c-4.8 0-8.5 3.5-8.5 8 0 2.4 1 4.5 2.8 6V21l3-1.7c.9.3 1.8.4 2.7.4 4.8 0 8.5-3.5 8.5-8s-3.7-8.2-8.5-8.2Z"/><path d="m7.5 13.5 3-3 2.5 2 3.5-3"/></svg></a>
+
+    <nav class="bnav" aria-label="ناوبری پایین">
+      <a href="#top"><svg class="i" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4Z"/></svg>خانه</a>
+      <a href="#collections"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>کالکشن‌ها</a>
+      <button id="favNav" type="button"><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"/></svg>علاقه‌مندی</button>
+      <a href="tel:09918032131"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>تماس</a>
+    </nav>
+
+    <script>
+      (function () {
+        var d = document, root = d.documentElement;
+        root.classList.add("js");
+        var fa = function (n) { return String(n).replace(/\d/g, function (x) { return "۰۱۲۳۴۵۶۷۸۹"[x]; }); };
+
+        // announcement
+        var msgs = ["ارسال به سراسر ایران از ایلام 📦", "استعلام قیمت با یک لمس در دایرکت", "هر مدل، محدود و خاص"], mi = 0, ann = d.getElementById("annText");
+        setInterval(function () {
+          ann.classList.add("out");
+          setTimeout(function () { mi = (mi + 1) % msgs.length; ann.textContent = msgs[mi]; ann.classList.remove("out"); }, 400);
+        }, 3600);
+
+        // drawer
+        var menuBtn = d.getElementById("menuBtn"), drawer = d.getElementById("drawer");
+        function setMenu(open) {
+          d.body.classList.toggle("open", open);
+          menuBtn.setAttribute("aria-expanded", open);
+          drawer.setAttribute("aria-hidden", !open);
+          if (open) d.getElementById("closeBtn").focus(); else menuBtn.focus({ preventScroll: true });
+        }
+        menuBtn.onclick = function () { setMenu(true); };
+        d.getElementById("closeBtn").onclick = function () { setMenu(false); };
+        d.getElementById("scrim").onclick = function () { setMenu(false); };
+        d.addEventListener("keydown", function (e) { if (e.key === "Escape" && d.body.classList.contains("open")) setMenu(false); });
+        drawer.querySelectorAll("[data-close]").forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+
+        // filtering
+        var cards = [].slice.call(d.querySelectorAll(".card")), chips = d.querySelectorAll(".chip"), empty = d.getElementById("empty");
+        var cat = "all", q = "";
+        function apply() {
+          var shown = 0;
+          cards.forEach(function (c) {
+            var okCat = cat === "all" || c.dataset.cat === cat || (cat === "fav" && c.classList.contains("liked"));
+            var okQ = !q || c.textContent.indexOf(q) > -1;
+            c.hidden = !(okCat && okQ);
+            if (!c.hidden) { shown++; c.classList.add("in"); }
+          });
+          empty.textContent = cat === "fav" ? "هنوز چیزی اینجا نیست. روی ♡ کیف‌های مورد علاقه‌ت بزن." : "مدلی با این مشخصات پیدا نشد؛ تو دایرکت بپرس 🌙";
+          empty.hidden = shown > 0;
+          chips.forEach(function (ch) { ch.setAttribute("aria-pressed", ch.dataset.chip === cat); });
+        }
+        function filterTo(c) {
+          cat = c; apply();
+          d.getElementById("products").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+        }
+        chips.forEach(function (ch) { ch.onclick = function () { cat = ch.dataset.chip; apply(); }; });
+        d.querySelectorAll("[data-filter]").forEach(function (b) {
+          b.addEventListener("click", function () { if (d.body.classList.contains("open")) setMenu(false); filterTo(b.dataset.filter); });
+        });
+        d.getElementById("favBtn").onclick = function () { filterTo("fav"); };
+        d.getElementById("favNav").onclick = function () { filterTo("fav"); };
+
+        // search
+        var sBtn = d.getElementById("searchBtn"), sBar = d.getElementById("searchBar"), qi = d.getElementById("q");
+        sBtn.onclick = function () {
+          var open = sBar.hidden; sBar.hidden = !open; sBtn.setAttribute("aria-expanded", open);
+          if (open) qi.focus(); else { qi.value = ""; q = ""; apply(); }
+        };
+        qi.addEventListener("input", function () { q = qi.value.trim(); if (cat === "fav") cat = "all"; apply(); });
+        qi.addEventListener("keydown", function (e) { if (e.key === "Enter") d.getElementById("products").scrollIntoView({ behavior: "smooth" }); });
+
+        // hearts
+        var favCount = d.getElementById("favCount");
+        cards.forEach(function (c) {
+          var h = c.querySelector(".heart"), name = c.querySelector("h3").textContent;
+          h.setAttribute("aria-label", "علاقه‌مندی: " + name);
+          h.onclick = function () {
+            var on = h.getAttribute("aria-pressed") !== "true";
+            h.setAttribute("aria-pressed", on); c.classList.toggle("liked", on);
+            var n = d.querySelectorAll(".card.liked").length;
+            favCount.textContent = fa(n); favCount.hidden = n === 0;
+            if (cat === "fav") apply();
+          };
+        });
+
+        // enquiry: bump the bag before opening DM
+        var bag = 0, bagCount = d.getElementById("bagCount");
+        d.querySelectorAll(".ask").forEach(function (a) {
+          a.addEventListener("click", function () {
+            bag++; bagCount.textContent = fa(bag);
+            bagCount.classList.add("pop"); setTimeout(function () { bagCount.classList.remove("pop"); }, 300);
+          });
+        });
+
+        // accordion
+        d.querySelectorAll(".q").forEach(function (b) {
+          b.onclick = function () {
+            var open = b.getAttribute("aria-expanded") !== "true";
+            b.setAttribute("aria-expanded", open);
+            d.getElementById(b.getAttribute("aria-controls")).classList.toggle("open", open);
+          };
+        });
+
+        // reveal on scroll
+        var rs = d.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+          }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+          rs.forEach(function (r) { io.observe(r); });
+        } else rs.forEach(function (r) { r.classList.add("in"); });
+      })();
+    </script>
+  </body>
+</html>
